@@ -1,0 +1,134 @@
+package eu.itiscuneo;
+
+import java.lang.*;
+import java.io.*;
+import java.util.*;
+
+import java.sql.*;
+
+public class Main {
+    static final String SQLCLASS = "org.sqlite.JDBC";
+    //static final String SQLCLASS = "org.gjt.mm.mysql.Driver";
+    static final String SQLURL = "jdbc:sqlite:test.db";
+    //static final String SQLURL = "jdbc:mysql://localhost:3306/test"
+    static final String SQLUSER = "";
+    static final String SQLPWD = "";
+    static Connection conn = null;
+    static Statement statm = null;
+    static ResultSet rs = null;
+
+    static Vector<Impiegati> anagrafica;
+
+
+    static InputStreamReader r = new InputStreamReader(System.in);
+    static BufferedReader br = new BufferedReader(r);
+    static String sql = null;
+
+    public static void main(String[] args) {
+        if (conn == null) {
+            try{
+                Class.forName(SQLCLASS).newInstance();
+                //conn = DriverManager.getConnection(SQLURL,SQLUSER,SQLPWD);
+                conn=DriverManager.getConnection(SQLURL);
+                statm = conn.createStatement();
+            } catch (Exception ex) {
+                System.err.println(ex.getClass().getName() + " : " + ex.getMessage());
+                System.out.println("Connessione non OK, uscita programma.");
+                System.exit(0);
+            }
+        }
+        try {
+            rs = statm.executeQuery("SELECT * FROM Impiegati;");
+            while (rs.next()) {
+                anagrafica.add(new Impiegati(rs.getString("nome"),
+                        rs.getString("cognome"), rs.getString("citta") ));
+            }
+        } catch (Exception ex) {
+            System.err.println(ex.getClass().getName() + " : " + ex.getMessage());
+            System.out.println("Query " + sql + " ha dato eccezione");
+        }
+        int scelta = 0;
+        do {
+            System.out.println("Gestione database");
+            System.out.println("=================");
+            System.out.println("Premi 1 per visualizzare tutti i record.");
+            System.out.println("Premi 2 per aggiungere nuovo record.");
+            System.out.println("Premi 3 per cancellare un record.");
+            System.out.println("Premi 4 per uscire.");
+            System.out.println("Immettere scelta:");
+            try {
+                scelta=Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                System.out.println("Scelta non riconosciuta");
+            }
+            switch (scelta) {
+                case 1: //visualizza tutti i record
+                    for(Impiegati tmpImpiegato : anagrafica) {
+                        System.out.println(tmpImpiegato.getNome() + ", " + tmpImpiegato.getCognome() +
+                                ", " + tmpImpiegato.getCitta() );
+                    }
+                    break;
+                case 2: //aggiungi nuovo record
+                    System.out.println("Immetti nome:");
+                    String nome = null;
+                    try {
+                        nome=br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Errore in immissione nome.");
+                        nome = "errore";
+                    }
+                    System.out.println("Immetti cognome:");
+                    String cognome = null;
+                    try {
+                        cognome=br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Errore in immissione cognome.");
+                        cognome = "errore";
+                    }
+                    System.out.println("Immetti città :");
+                    String citta = null;
+                    try {
+                        citta=br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Errore in immissione città.");
+                        citta = "errore";
+                    }
+                    anagrafica.add(new Impiegati(nome, cognome, citta ));
+                    break;
+                case 3: //cancella record specifico
+                    System.out.println("Immetti nome:");
+                    String nomeDel = null;
+                    try {
+                        nomeDel=br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Errore in immissione nome.");
+                        nomeDel = "errore";
+                    }
+                    System.out.println("Immetti cognome:");
+                    String cognomeDel = null;
+                    try {
+                        cognomeDel=br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Errore in immissione cognome.");
+                        cognomeDel = "errore";
+                    }
+                    for(Impiegati tmpImpiegato : anagrafica) {
+                        if (nomeDel.equals(tmpImpiegato.getNome()) && cognomeDel.equals(tmpImpiegato.getCognome()))
+                            anagrafica.remove(tmpImpiegato);
+                    }
+                    break;
+                case 4: //uscire dal programma
+                    System.out.println("Vuoi salvare il lavoro (Y/N) ?");
+                    boolean bSalva = false;
+                    try {
+                        if (br.readLine().equals("Y")) bSalva = true;
+                    } catch (IOException e) {
+                        System.out.println("Scelta non riconosciuta");
+                    }
+                    //DA FINIRE SALVATAGGIO
+                    break;
+            } //chiudo switch
+        } while (scelta != 4);
+        System.out.println("Programma terminato.");
+    } //chiude main()
+} // chiude classe
