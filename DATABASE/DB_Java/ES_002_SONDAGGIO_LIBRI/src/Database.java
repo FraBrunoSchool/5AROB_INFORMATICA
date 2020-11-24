@@ -81,14 +81,22 @@ public class Database {
 
     private Vector<String> print_query_result() throws SQLException {
         ResultSetMetaData rsmd = this.result.getMetaData();
-        Vector<String> result = new Vector<String>();
+        Vector<String> result = new Vector();
         int columnsNumber = rsmd.getColumnCount();
+        String ColumnName = "";
+        for (int i = 1; i <= columnsNumber; i++) {
+            ColumnName += "-" + rsmd.getColumnName(i);
+        }
+        result.add(ColumnName);
         while (this.result.next()) {
+            String resultLine = "";
             for (int i = 1; i <= columnsNumber; i++) {
                 String columnValue = this.result.getString(i);
-                result.add(rsmd.getColumnName(i) + ": " + columnValue);
+                resultLine += "-" + columnValue;
             }
+            result.add(resultLine);
         }
+
         return result;
     }
 }
