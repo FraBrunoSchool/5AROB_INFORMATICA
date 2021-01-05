@@ -1,0 +1,17 @@
+Crea il sito web di una palestra con:
+1) barra di navigazione, con effetto toggle per schermi piccoli con logo
+   seguito dalle voci di menu "home", "centro fitness", "corsi"
+   (con tendina includente "aerobica", "tone up", "posturale",
+   "total body", "GAG", "zumba", "yoga"), "personal trainer",
+   "dove siamo", "contatti", seguiti dal form inline per la ricerca;
+2) jumbotron su intera larghezza, con slogan così fatto:
+   - titolo: "il corpo umano è un tempio e come tale va curato e rispettato, sempre";
+   - sottotitolo: "Ippocrate";
+   - sfondo con sfumatura a gradiente;
+   - bottone con etichetta "scopri i nostri corsi";
+3) quattro card con titolo, immagine e link alle sezioni
+   "corsi", "fitness", "area relax", "personal trainer";
+4) footer con jumbotron suddiviso in 3 sezioni:
+   - informazioni legali (25% dello spazio);
+   - orari (50% dello spazio);
+   - copyright con indicazione autore del sito (25% dello spazio).
