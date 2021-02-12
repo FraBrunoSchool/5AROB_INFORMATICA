@@ -36,10 +36,20 @@ echo("Corsi: ");
 foreach ($corsi as $valore)
     echo("$valore, ");
 echo("<br>");
-
+$array=implode(",", $corsi);
 $email=$_REQUEST["txtE-Mail"];
 echo("E-Mail: $email<br>");
+
+$con = new mysqli('localhost','root','','db_iscrizione');
+if ($con->connect_error)
+	die("Error: Failed to connect to DB: ".$con->connect_errno . " - ". $con->connect_error);
+
+
+$sql="INSERT INTO iscritti VALUES('$nome', '$cognome', '$eta', '$sesso', '$array', '$email')";
+$ok = $con->query($sql);
 ?>
+
+
 </body>
 
 </html>
