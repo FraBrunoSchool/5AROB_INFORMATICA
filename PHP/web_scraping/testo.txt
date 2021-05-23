@@ -1,0 +1,13 @@
+Esercizio preparazione verifica
+===============================
+1) caricare dati da un file di testo contenente un URL per ogni riga;
+2) effettuare scraping URL memorizzati, in sequenza, estraendo link a URL esterni presenti su pagine visitate. Tali link vanno memorizzati sul DB in un'altra tabella, che deve prevedere dei campi per:
+- l'URL originario che lo contiene;
+- codici di decodifica per catalogazione (tipologia sito: PA, noProfit, privati commerciali);
+3) preparare schermata che visualizza risultati in tabella, con a fianco tipologia sito decodificata e numero di siti in cui compare e pulsante per vedere dettaglio di tali siti;
+4) pagina per dettaglio suddetto.
+http://www.itiscuneo.gov.it
+http://www.vallauri.edu
+https://www.cigna-baruffi-garelli.edu.it
+https://www.istitutoguala.edu.it
+https://www.denina.it
